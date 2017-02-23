@@ -1,0 +1,15 @@
+#!/bin/bash
+
+TOKEN=""
+CHAT_ID=""
+
+MESSAGE=$1
+test -p /dev/stdin && MESSAGE=$MESSAGE'```'`< /dev/stdin`'```'
+
+if [ -z $MESSAGE ]; then
+    echo "Message text is empty"
+    exit 1
+fi
+
+curl -X POST https://api.telegram.org/bot$TOKEN/sendMessage \
+-d "parse_mode=Markdown&chat_id=$CHAT_ID&text=$MESSAGE"
